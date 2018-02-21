@@ -64,6 +64,21 @@ public class MainFragment extends BrowseFragment{
         /* set */
         setAdapter(mRowsAdapter);
 
+        /* CardPresenter */
+        HeaderItem cardPresenterHeader = new HeaderItem(1, "CardPresenter");
+        CardPresenter cardPresenter = new CardPresenter();
+        ArrayObjectAdapter cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
+
+        for (int i = 0; i<10; i++) {
+            Movie movie = new Movie();
+            //movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02580.jpg");
+            movie.setCardImageUrl("https://images2.alphacoders.com/724/724045.png");
+            movie.setTitle("title");
+            movie.setStudio("studio" + i);
+            cardRowAdapter.add(movie);
+        }
+        mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
+
     }
 
     private class GridItemPresenter extends Presenter {
