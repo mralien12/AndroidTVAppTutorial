@@ -1,5 +1,6 @@
 package alticast.com.androidtvapptutorial;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BrowseFragment;
@@ -7,6 +8,7 @@ import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
+import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
@@ -51,6 +53,7 @@ public class MainFragment extends BrowseFragment {
 
     private void setUpEventListeners() {
         setOnItemViewSelectedListener(new ItemViewSelectedListener());
+        setOnItemViewClickedListener(new ItemViewClickedListener());
     }
 
     private void setUpUIElements() {
@@ -135,6 +138,20 @@ public class MainFragment extends BrowseFragment {
             } else if (item instanceof Movie) {
                 //simpleBackgroundManager.updateBackground(getActivity().getDrawable(R.drawable.movie));
                 picassoBackgroundManager.updateBackgroundWithDelay(((Movie) item).getCardImageUrl());
+            }
+        }
+    }
+
+    private class ItemViewClickedListener implements OnItemViewClickedListener {
+        @Override
+        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
+            // each time the item is clicked, code inside here will be executed.
+            if (item instanceof Movie) {
+                Movie movie = (Movie) item;
+                Log.d(TAG, "Item: " + item.toString());
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra(DetailsActivity.MOVIE, movie);
+                getActivity().startActivity(intent);
             }
         }
     }

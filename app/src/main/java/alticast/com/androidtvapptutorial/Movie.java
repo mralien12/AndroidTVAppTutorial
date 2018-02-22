@@ -1,5 +1,6 @@
 package alticast.com.androidtvapptutorial;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -13,7 +14,7 @@ import java.net.URISyntaxException;
  *  accordance with the terms of the license agreement you entered into
  *  with Alticast.
  */
-public class Movie {
+public class Movie implements Serializable{
     private static final String TAG = Movie.class.getSimpleName();
 
     static final long serialVersionUID = 1L;
@@ -21,6 +22,15 @@ public class Movie {
     private String title;
     private String studio;
     private String cardImageUrl;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Movie(){
     }
