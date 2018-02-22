@@ -26,12 +26,13 @@ import android.widget.TextView;
  *  accordance with the terms of the license agreement you entered into
  *  with Alticast.
  */
-public class MainFragment extends BrowseFragment{
+public class MainFragment extends BrowseFragment {
     private static final String TAG = MainFragment.class.getSimpleName();
     private static final int GRID_ITEM_WIDTH = 300;
     private static final int GRID_ITEM_HEIGHT = 200;
     private ArrayObjectAdapter mRowsAdapter;
     private static SimpleBackgroundManager simpleBackgroundManager = null;
+    private static PicassoBackgroundManager picassoBackgroundManager = null;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -44,7 +45,8 @@ public class MainFragment extends BrowseFragment{
 
         setUpEventListeners();
 
-        simpleBackgroundManager = new SimpleBackgroundManager(getActivity());
+        //simpleBackgroundManager = new SimpleBackgroundManager(getActivity());
+        picassoBackgroundManager = new PicassoBackgroundManager(getActivity());
     }
 
     private void setUpEventListeners() {
@@ -61,7 +63,7 @@ public class MainFragment extends BrowseFragment{
         setSearchAffordanceColor(getResources().getColor(R.color.search_opaque));
     }
 
-    private void loadRows(){
+    private void loadRows() {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
         /*  GridItemPresenter */
@@ -81,10 +83,16 @@ public class MainFragment extends BrowseFragment{
         CardPresenter cardPresenter = new CardPresenter();
         ArrayObjectAdapter cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
 
-        for (int i = 0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             Movie movie = new Movie();
-            //movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02580.jpg");
-            movie.setCardImageUrl("https://images2.alphacoders.com/724/724045.png");
+            if (i % 3 == 0) {
+                movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02580.jpg");
+            } else if (i % 3 == 1) {
+                movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02630.jpg");
+            } else {
+                movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02529.jpg");
+            }
+            //movie.setCardImageUrl("https://images2.alphacoders.com/724/724045.png");
             movie.setTitle("title");
             movie.setStudio("studio" + i);
             cardRowAdapter.add(movie);
@@ -122,9 +130,11 @@ public class MainFragment extends BrowseFragment{
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
             // each time the item is selected, code inside here will be executed.
             if (item instanceof String) {
-                simpleBackgroundManager.clearBackground();
+                //simpleBackgroundManager.clearBackground();
+                picassoBackgroundManager.updateBackgroundWithDelay("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/10/RIMG0656.jpg");
             } else if (item instanceof Movie) {
-                simpleBackgroundManager.updateBackground(getActivity().getDrawable(R.drawable.movie));
+                //simpleBackgroundManager.updateBackground(getActivity().getDrawable(R.drawable.movie));
+                picassoBackgroundManager.updateBackgroundWithDelay(((Movie) item).getCardImageUrl());
             }
         }
     }
