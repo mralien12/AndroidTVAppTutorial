@@ -73,7 +73,8 @@ public class MainFragment extends BrowseFragment {
         HeaderItem gridItemPresenterHeader = new HeaderItem(0, "GridItemPresenter");
         GridItemPresenter mGridPresenter = new GridItemPresenter();
         ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
-        gridRowAdapter.add("ITEM 1");
+//        gridRowAdapter.add("ITEM 1");
+        gridRowAdapter.add("ErrorFragment");
         gridRowAdapter.add("ITEM 2");
         gridRowAdapter.add("ITEM 3");
         mRowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
@@ -152,6 +153,11 @@ public class MainFragment extends BrowseFragment {
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.MOVIE, movie);
                 getActivity().startActivity(intent);
+            } else if (item instanceof String) {
+                if (item == "ErrorFragment") {
+                    Intent intent = new Intent(getActivity(), ErrorActivity.class);
+                    startActivity(intent);
+                }
             }
         }
     }
